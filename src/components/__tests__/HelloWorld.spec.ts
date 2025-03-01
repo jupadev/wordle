@@ -4,8 +4,12 @@ import { mount } from '@vue/test-utils'
 import WordleBoard from '../WordleBoard.vue'
 
 describe('WordleBoard', () => {
-  it('renders properly', () => {
-    const wrapper = mount(WordleBoard, { props: { msg: 'Hello Vitest' } })
-    expect(wrapper.text()).toContain('Hello Vitest')
+  it('should render victory message when user guess the word of the day', async () => {
+    const wrapper = mount(WordleBoard, { props: { wordOfTheDay: 'MAIL' } })
+    const guessInput = wrapper.find('input[type=text]')
+    await guessInput.setValue('MAIL')
+    await guessInput.trigger('keydown.enter')
+
+    expect(wrapper.text()).toContain('You Won!')
   })
 })
